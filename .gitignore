@@ -1,0 +1,68 @@
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# 配置文件（含凭据，仅提交 *.example.json）
+feishu-bot-config.json
+# 一切 `*.local.json` 都是本机覆盖配置（可能含 token / API Key），一律不提交。
+# 用通配是因为逐个列名会漏：新增 ocr-config.local.json 时才发现 wiki-config.local.json
+# 曾经只被显式列名覆盖，而导出排除列表里连它都没有。
+*.local.json
+config.local.json
+wiki-config.local.json
+ocr-config.local.json
+sanitize.local.json
+sanitize.local.*.json
+*.cookie
+cookies/
+*.pem
+*.key
+
+# 本地 Agent 配置（settings.local.json 可能含 API Key）
+.claude/
+.codex/
+.agents/
+
+# 日志与备份（可能泄露消息内容、access_key）
+*.log
+*.bak
+*.bak-*
+
+# 运行时
+runtime/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# 知识库数据（不提交私有内容）
+vault/
+raw/
+
+# 生成的 wiki 与删除回收（个人内容，不提交）
+wiki/
+_trash/
+
+# 项目记忆与缓存（非源码，含 .workbuddy/memory）
+.workbuddy/
+
+# 开源导出产物
+dist/
+
+# ===== 个人知识内容（开源框架默认不收录，使用者自行入库）=====
+raw/articles/*
+raw/notes/*
+raw/inbox/*
+raw/_archive/*
+wiki/topics/*
+wiki/queries/*
+!**/.gitkeep

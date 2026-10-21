@@ -1,0 +1,5 @@
+{
+  "token": "替换为一个至少24字符的随机字符串",
+  "allowed_origins": [],
+  "_comment": "复制本文件为 config.local.json（已在 .gitignore 中）。token 也可用环境变量 CLIP_SERVER_TOKEN 提供（环境变量优先）。生成命令: python3 -c \"import secrets; print(secrets.token_urlsafe(32))\"。allowed_origins 填额外允许跨域访问的 Origin（默认已放行浏览器扩展和 http://localhost），例如 [\"https://example.com\"]"
+}

@@ -1,0 +1,6 @@
+{
+  "app_id": "cli_xxxxxxxxxxxxxxxx",
+  "app_secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "clip_server": "http://127.0.0.1:7878",
+  "_comment": "复制本文件为 feishu-bot-config.json（已在 .gitignore 中），填入飞书应用凭据"
+}

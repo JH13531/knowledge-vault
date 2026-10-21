@@ -1,0 +1,37 @@
+# coding: utf-8
+# knowledge-vault 依赖
+# 安装：pip install -r requirements.txt
+# 仅跑 lint.py 只需 PyYAML；clip-server 核心至少需要 requests。
+
+# —— 核心：tools/clip-server.py 与平台适配器 ——
+requests>=2.31            # 剪藏服务、图片下载、短链解析、飞书 API
+beautifulsoup4>=4.12      # 微信/小红书/B 站页面解析
+trafilatura>=1.8          # 普通网页正文提取（platforms/webpage.py）
+PyYAML>=6.0               # lint.py 解析 frontmatter（缺失时有简易兜底）
+
+# —— 可选：飞书机器人 tools/feishu-bot.py ——
+lark-oapi>=1.4
+
+# —— 可选：YouTube 字幕（yt-dlp 取不到字幕时的降级）——
+youtube-transcript-api>=0.6
+
+# —— 可选：浏览器协助 tools/playwright-worker.py ——
+httpx>=0.27
+playwright>=1.40
+# 安装后还需执行：playwright install chromium
+
+# —— 可选：YouTube / B 站字幕 tools/platforms/{youtube,bilibili}.py ——
+yt-dlp>=2024.1           # pip 可装；也可用系统包管理器安装
+
+# —— 可选：存量图片归一化 tools/convert_to_webp.py ——
+Pillow>=10.0             # 转 WebP + 按 §7.1 缩放（含 libwebp，多数平台有预编译 wheel）
+# 注：clip-server.py 剪藏时**不依赖** Pillow——图片原样落盘，本工具做批量归一化
+
+# —— 可选：图片文字 OCR tools/ocr_images.py（正文写在图片里的笔记）——
+# 多模态后端：复用 requests + wiki 的 Tier 2 配置（tools/wiki-config.local.json），无额外依赖
+# 本地后端：外部命令（如 tesseract），不归 pip 管理；装了 Pillow 会自动缩图降低 payload
+# 配置见 tools/ocr-config.example.json；缺省 engine=auto（多模态优先，本地命令兜底）
+
+# —— 外部命令行工具（不归 pip 管理，按需安装）——
+# lark-cli   飞书文档抓取（npm 包 @larksuite/cli：npm install -g @larksuite/cli）
+# claude     wiki_gen.py 的本地精加工（Claude Code CLI，Tier 1）

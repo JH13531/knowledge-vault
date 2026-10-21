@@ -1,0 +1,23 @@
+{
+  "_comment": "下游 OCR 配置。复制为 tools/ocr-config.local.json 后按需修改。缺省文件时默认 engine=auto。",
+  "_how_to_fill": "engine=auto 时：先看 wiki 的 Tier 2 API 配置（tools/wiki-config.local.json）是否可用，可用则用多模态；否则看你有没有填可用的 local_command。",
+
+  "engine": "auto",
+
+  "_engine_options": {
+    "auto": "配了 vision 模型(下面的 model)且 wiki 的 Tier 2 API 可用 → 用多模态；否则本地命令可用就用本地；都不可用则「图多字少」只记 skipped（不产垃圾 wiki）",
+    "multimodal": "只用多模态（复用 wiki Tier 2 配置的 api_key/base_url）",
+    "local": "只用本地命令",
+    "off": "显式关闭 OCR（等同没有通道）"
+  },
+
+  "_model_help": "multimodal 用的 vision 模型名（必须支持图片输入）。engine=auto 时**必须显式填**（否则视为没有多模态通道，不会白跑失败调用）；engine=multimodal 时留空则复用 wiki-config.local.json 的 model（该模型若不支持图片会失败）。示例：gpt-4o-mini / qwen-vl-max 等。",
+  "model": "",
+
+  "_local_command_help": "local 后端：任意可把图片转成文字的命令模板，{input} 会被替换为**带引号的图片绝对路径**。示例：\"tesseract {input} stdout -l chi_sim+eng\"",
+  "local_command": "",
+
+  "max_images": 10,
+  "max_image_bytes": 4194304,
+  "timeout": 120
+}

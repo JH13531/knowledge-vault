@@ -1,0 +1,16 @@
+{
+  "_说明": [
+    "脱敏规则示例。复制成 tools/sanitize.local.json 后改成你自己的内容——该文件已被 .gitignore 忽略，不会随仓库分发，",
+    "所以真实公司名 / 路径 / 域名只应该写在 sanitize.local.json 里，不要写回本文件或 export_opensource.py。",
+    "pattern 是正则（注意 JSON 里反斜杠要写两个），repl 是替换文本；替换按数组顺序执行，所以长模式要排在短模式前面。"
+  ],
+  "sanitize_rules": [
+    {"pattern": "/home/yourname/projects/knowledge-vault", "repl": "/path/to/knowledge-vault"},
+    {"pattern": "/home/yourname", "repl": "/home/<you>"},
+    {"pattern": "你的公司名", "repl": "某公司"},
+    {"pattern": "https?://[a-zA-Z0-9.-]*(example\\.com)[^\\s)\"']*", "repl": "<内部链接已省略>"}
+  ],
+  "exclude_files": [
+    "tools/内部开发笔记.md"
+  ]
+}

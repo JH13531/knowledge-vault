@@ -1,0 +1,71 @@
+{
+  "manifest_version": 3,
+  "name": "知识库入库",
+  "version": "0.2.36",
+  "description": "一键将当前网页内容剪藏到本地 knowledge-vault",
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "alarms",
+    "contextMenus",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://localhost:7878/*",
+    "http://127.0.0.1:7878/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "入库",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "platforms/base.js",
+        "platforms/known-sites.js",
+        "platforms/feishu.js",
+        "platforms/bilibili.js",
+        "platforms/youtube.js",
+        "platforms/xiaohongshu.js",
+        "platforms/wechat.js",
+        "platforms/registry.js",
+        "content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "clip-page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      },
+      "description": "一键入库当前页面"
+    }
+  }
+}

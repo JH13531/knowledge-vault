@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>知识库 - 设置</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      color: #1f2937;
+      background: #fafafa;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h1 .logo { font-size: 24px; }
+    .section {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 12px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .field {
+      margin-bottom: 12px;
+    }
+    .field:last-child { margin-bottom: 0; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 4px;
+    }
+    .field .hint {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 2px;
+    }
+    .field input[type="text"],
+    .field input[type="password"],
+    .field select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+    }
+    .checkbox-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 0;
+    }
+    .checkbox-field input[type="checkbox"] {
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      accent-color: #3b82f6;
+    }
+    .checkbox-field .checkbox-label {
+      font-size: 13px;
+      color: #374151;
+    }
+    .checkbox-field .checkbox-desc {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 1px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+    }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-primary:disabled { background: #9ca3af; cursor: not-allowed; }
+    .btn-test {
+      background: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+    .btn-test:hover { background: #e5e7eb; }
+    .status {
+      margin-top: 8px;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      display: none;
+    }
+    .status.success { background: #dcfce7; color: #166534; display: block; }
+    .status.error { background: #fee2e2; color: #991b1b; display: block; }
+    .status.loading { background: #fef3c7; color: #92400e; display: block; }
+    .save-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+    .save-msg {
+      font-size: 12px;
+      color: #16a34a;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .save-msg.visible { opacity: 1; }
+    .server-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .server-status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d1d5db;
+    }
+    .server-status.connected .dot { background: #22c55e; }
+    .server-status.error .dot { background: #ef4444; }
+    .about {
+      font-size: 11px;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+    .about a {
+      color: #6b7280;
+      text-decoration: none;
+    }
+    .about a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1><span class="logo">📚</span> 知识库设置</h1>
+
+  <!-- 连接设置 -->
+  <div class="section">
+    <h2 class="section-title">🔗 连接设置</h2>
+    <div class="field">
+      <label for="serverUrl">服务器地址</label>
+      <input type="text" id="serverUrl" placeholder="http://localhost:7878">
+      <div class="hint">clip-server.py 的监听地址</div>
+    </div>
+    <div class="field">
+      <label for="token">访问 Token</label>
+      <input type="password" id="token" placeholder="服务端未启用鉴权时留空">
+      <div class="hint">
+        服务端启用了鉴权时（启动日志会打印「鉴权: 已启用」），这里必须填
+        <strong>与 <code>tools/config.local.json</code> 中 <code>token</code>
+        完全一致</strong>的字符串，否则所有请求都会返回 <code>401 unauthorized</code>。
+        <details style="margin-top:4px">
+          <summary style="cursor:pointer">服务端已启用鉴权，我该填什么？</summary>
+          <ol style="margin:6px 0 2px 18px; padding:0; line-height:1.7">
+            <li>
+              先看 <code>tools/config.local.json</code> <strong>是否已经存在</strong>：
+              <ul style="margin:2px 0 2px 0; padding-left:18px">
+                <li><strong>已存在</strong> → 直接打开它，复制 <code>token</code> 字段引号内的那串值</li>
+                <li><strong>不存在</strong> → 把 <code>tools/config.example.json</code>
+                  复制一份改名为 <code>config.local.json</code>
+                  （<code>cp</code> / <code>copy</code>），再把 token 改成自己的随机串</li>
+              </ul>
+            </li>
+            <li>把<strong>同一串</strong> token 粘贴到上方输入框，点「测试连接」</li>
+            <li>改 <code>config.local.json</code> 里的 token 后要<strong>重启
+              clip-server.py</strong> 才生效；只改本插件不需要重启</li>
+          </ol>
+          <p style="margin:6px 0 0">
+            ⚠️ <strong>不要覆盖已存在的 <code>config.local.json</code></strong> ——
+            那会用示例文件里的 token 替换掉你本机的 token，服务端与插件就对不上了。
+          </p>
+          <p style="margin:6px 0 0">
+            生成新 token：<code>python3 -c "import secrets; print(secrets.token_urlsafe(32))"</code>；
+            或用环境变量 <code>CLIP_SERVER_TOKEN</code> 启动服务，效果相同。
+          </p>
+          <p style="margin:6px 0 0">
+            <strong>本机自用、不想配 token？</strong> 把
+            <code>config.local.json</code> 的 <code>token</code> 改成空字符串
+            <code>""</code> 并重启服务 —— 服务端检测到空 token 会自动跳过鉴权，
+            这里留空即可。代价：同一台机器上的其他程序也能调用这个接口。
+          </p>
+        </details>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+      <button class="btn btn-test" id="testConnection">🔍 测试连接</button>
+      <span class="server-status" id="serverStatus">
+        <span class="dot"></span>
+        <span class="status-text">未测试</span>
+      </span>
+    </div>
+    <div class="status" id="testResult"></div>
+  </div>
+
+  <!-- 剪藏偏好 -->
+  <div class="section">
+    <h2 class="section-title">📋 剪藏偏好</h2>
+    <div class="field">
+      <label for="defaultClipMode">默认入库模式</label>
+      <select id="defaultClipMode">
+        <option value="ask">每次询问（默认）</option>
+        <option value="inbox">默认存入待审区</option>
+        <option value="full">默认立即完整入库</option>
+      </select>
+      <div class="hint">打开 popup 时自动执行对应操作，或每次手动选择</div>
+    </div>
+    <div class="checkbox-field">
+      <input type="checkbox" id="saveImages" checked>
+      <div>
+        <div class="checkbox-label">保存图片</div>
+        <div class="checkbox-desc">关闭后只保存文字内容，加快剪藏速度并节省空间</div>
+      </div>
+    </div>
+    <div class="checkbox-field">
+      <input type="checkbox" id="showNotifications" checked>
+      <div>
+        <div class="checkbox-label">桌面通知</div>
+        <div class="checkbox-desc">剪藏成功或失败时弹出桌面通知</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 保存栏 -->
+  <div class="save-bar">
+    <button class="btn btn-primary" id="saveBtn">💾 保存设置</button>
+    <span class="save-msg" id="saveMsg">✅ 已保存</span>
+  </div>
+
+  <!-- 关于 -->
+  <div class="about">
+    知识库剪藏扩展 v1.0<br>
+    <a href="http://localhost:7878/api/health" id="healthLink" target="_blank">服务健康检查</a>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
